@@ -85,18 +85,19 @@ def is_validated_english_sentence(user_input):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당 또는 필요에 따라 자유로운 수정
     result = False
+    codes = list('.,?!')
+
+    if user_input.count(' ') == len(user_input):
+        return False
     
     if len(user_input) :
         for i in user_input:
-            if i.isalpha() or i == ' ':
+            if i.isalpha() or (i == ' ') or (i in codes):
                 continue
             else:
                 break
         else:
             result = True
-    
-    if user_input.count(' ') == len(result):
-        result = False
 
     return result
     # ==================================
@@ -201,13 +202,9 @@ def decoding_character(morse_character):
     morse_code_dict = get_morse_code_dict()
     # key_value reversed dict (morse_code_dict)
     alpha_code_dict = {v:k for k, v in morse_code_dict.items()}
+    
     result = ''
-
-    if morse_character == '':
-        result = ' '
-    else:
-        result = alpha_code_dict[morse_character]
-
+    result = alpha_code_dict[morse_character]
     return result
     # ==================================
 
@@ -236,12 +233,8 @@ def encoding_character(english_character):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당 또는 필요에 따라 자유로운 수정
     morse_code_dict = get_morse_code_dict()
-    result = ''
-
-    if encoding_character == '':
-        result = ''
-    else:
-        result = morse_code_dict[english_character]
+    
+    result = morse_code_dict[english_character]
 
     return result
     # ==================================
@@ -269,7 +262,8 @@ def decoding_sentence(morse_sentence):
     result = ''
     morse_code_dict = get_morse_code_dict()
     alpha_code_dict = {v:k for k, v in morse_code_dict.items()}
-    for mc in morse_sentence.split(' '):
+    morse_split = morse_sentence.split(' ')
+    for mc in morse_split:
         if mc == '':
             result += ' '
         else:
@@ -301,9 +295,10 @@ def encoding_sentence(english_sentence):
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당 또는 필요에 따라 자유로운 수정
     result = ''
     morse_code_dict = get_morse_code_dict()
+    
     clean_sentece = get_cleaned_english_sentence(english_sentence)
-
-    word_split = clean_sentece.upper().split(' ')
+    word_split = clean_sentece.upper().split()
+    
     for word in word_split:
         for alpha in word:
             result += encoding_character(alpha)
@@ -347,5 +342,7 @@ if __name__ == "__main__":
     # print(encoding_s)
     
     morse_code = encoding_s.split(' ')
-    # print(decoding_sentence(encoding_s))
+    print(decoding_sentence(encoding_s))
+    print(encoding_sentence(encoding_s))
     # print(get_help_message())
+    # print(is_validated_english_sentence("!_X_!"))
