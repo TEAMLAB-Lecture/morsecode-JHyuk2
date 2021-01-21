@@ -95,7 +95,7 @@ def is_validated_english_sentence(user_input):
         else:
             result = True
     
-    if result.count(' ') == len(result):
+    if user_input.count(' ') == len(result):
         result = False
 
     return result
@@ -238,8 +238,8 @@ def encoding_character(english_character):
     morse_code_dict = get_morse_code_dict()
     result = ''
 
-    if encoding_character == ' ':
-        result = ' '
+    if encoding_character == '':
+        result = ''
     else:
         result = morse_code_dict[english_character]
 
