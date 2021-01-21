@@ -86,20 +86,24 @@ def is_validated_english_sentence(user_input):
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당 또는 필요에 따라 자유로운 수정
     result = False
     codes = list('.,?!')
+    flag = 0
 
     if user_input.count(' ') == len(user_input):
         return False
     
     if len(user_input) :
         for i in user_input:
-            if i.isalpha() or (i == ' ') or (i in codes):
+            if i.isalpha():
+                flag = 1 
+                continue
+            if (i == ' ') or (i in codes):
                 continue
             else:
                 break
         else:
             result = True
 
-    return result
+    return result and flag
     # ==================================
 
 
@@ -233,7 +237,7 @@ def encoding_character(english_character):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당 또는 필요에 따라 자유로운 수정
     morse_code_dict = get_morse_code_dict()
-    
+
     result = morse_code_dict[english_character]
 
     return result
